@@ -1,0 +1,99 @@
+*{
+  margin:0px;
+  padding:0px;
+}
+
+.css-ws2lyb, .css-hq3har, .css-9ezbem{
+  box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+  padding: 20px;
+}
+
+.css-ag7rrr-MuiTypography-root{
+  color:#1976d2;
+  font-weight: 800 !important;
+}
+
+.cursor_pointer{
+  cursor: pointer;
+}
+
+.client_table_upper{
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer_main{
+  /* position: fixed; */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: lightgray;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.minHeight{
+  min-height: calc(100vh - 218px);
+}
+
+.min_height{
+  min-height: calc(100vh - 64px);
+}
+
+.css-ece9u5{
+  min-width: 87% !important;
+}
+
+.task_form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.create_invoice{
+  display:flex !important;
+  max-width: 100%!important;
+}
+
+.date_picker{
+    display: flex !important;
+    width: 87% !important;
+    justify-content: space-between;
+}
+.border-left{
+  border-left: 1px solid darkgrey;
+}
+
+@media only screen and (max-width: 1200px){
+  .create_invoice{
+    display:flex !important;
+    max-width: 100%!important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .date_picker{
+    display: flex !important;
+    flex-direction: column;
+    width: 87% !important;
+    justify-content: space-between;
+    height:130px
+}
+.css-2l474x{
+  width: 75%;
+}
+
+.border-left{
+  border-top: 1px solid darkgrey;
+  border-left: none;
+  margin-top: 10px;
+}
+
+}
