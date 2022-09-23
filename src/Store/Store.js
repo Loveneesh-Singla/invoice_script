@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./Sagas";
-import { auth, senderCompanyInfo, clients } from "./Slices";
+import { auth, senderCompanyInfo, clients, invoices } from "./Slices";
 
 const sagaMiddleware = createSagaMiddleware({ serializableCheck: false });
 
@@ -12,6 +12,7 @@ const store = configureStore({
     auth,
     senderCompanyInfo,
     clients,
+    invoices,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

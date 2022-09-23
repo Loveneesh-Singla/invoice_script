@@ -36,6 +36,7 @@ function App() {
           <Route path="/clients" element={<Clients />} />
           <Route path="/invoices" element={<Invoice />} />
           <Route path="/createInvoice" element={<CreateInvoice />} />
+          <Route path="/updateInvoice/:invoiceId" element={<CreateInvoice />} />
         </Routes>
         <Footer />
       </BrowserRouter>

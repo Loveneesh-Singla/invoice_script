@@ -11,11 +11,12 @@ import FormControl from "@mui/material/FormControl";
 import React, { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../../Store/Slices/Clients";
-import { GET_CLIENTS } from "../../Store/Action_Constants";
+import { setLoading } from "../../Store/Slices/Invoice";
+import { GET_CLIENTS, GET_INVOICE } from "../../Store/Action_Constants";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { useNavigate, useParams } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import swal from "sweetalert";
 const theme = createTheme();
@@ -27,7 +28,10 @@ export const CreateInvoice = () => {
   const [isTaskToUpdate, setIsTaskToUpdate] = useState(false);
   const [shareInvoiceWith, setShareInvoiceWith] = useState("");
   const [indexOfTaskToUpdate, setIndexOfTaskToUpdate] = useState();
-  const { loading, clients } = useSelector((state) => state.clients);
+  const { clients } = useSelector((state) => state.clients);
+  const { invoiceCreating, invoiceToUpdate } = useSelector(
+    (state) => state.invoices
+  );
   const [selectedClient, setSelectedClient] = React.useState({
     id: "",
     index: "",
@@ -42,22 +46,52 @@ export const CreateInvoice = () => {
   });
   const [tasks, setTasks] = React.useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
-
+  const navigate = useNavigate();
   const handleDateChange = (newValue) => {
     setInvoiceDate(newValue);
   };
-
+  const { invoiceId } = useParams();
   const handleDueDateChange = (newValue) => {
     setDueDate(newValue);
   };
 
   React.useEffect(() => {
-    dispatch(setLoading(true));
+    if (invoiceId) {
+      dispatch(setLoading(true));
+      dispatch({ type: GET_INVOICE, payload: invoiceId });
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (invoiceToUpdate && invoiceId) {
+      setShareInvoiceWith(invoiceToUpdate.shareInvoiceWithEmail);
+      setTasks(invoiceToUpdate.task_detail);
+      setTotalAmount(Number(invoiceToUpdate.invoicetotalvalue));
+      setInvoiceDate(invoiceToUpdate.invoicedate);
+      setDueDate(invoiceToUpdate.duedate);
+      setSelectedClient({
+        id: invoiceToUpdate?.client_detail?.id,
+        index: "",
+        name: invoiceToUpdate?.client_detail?.name,
+        companyName: invoiceToUpdate?.client_detail?.companyname,
+      });
+    }
+  }, [invoiceToUpdate]);
+
+  React.useEffect(() => {
+    if (!invoiceCreating) {
+      navigate("/invoices");
+    }
+  }, [invoiceCreating]);
+
+  React.useEffect(() => {
     dispatch({ type: GET_CLIENTS });
   }, []);
 
   const handleChange = (event) => {
-    const sel_client = clients[Number(event.target.value)];
+    const sel_client = clients.find(
+      (client) => client.id === event.target.value
+    );
 
     setSelectedClient({
       id: sel_client.id,
@@ -70,7 +104,7 @@ export const CreateInvoice = () => {
   const renderClients = () => {
     return clients.map((client, ind) => {
       return (
-        <MenuItem value={ind + ""} key={ind}>
+        <MenuItem value={client.id} key={ind}>
           {client.name}
         </MenuItem>
       );
@@ -87,20 +121,20 @@ export const CreateInvoice = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     if (!isTaskToUpdate) {
       setTasks([...tasks, taskInfo]);
       let amount = totalAmount;
       amount += Number(taskInfo.totalPrice);
       setTotalAmount(amount);
     } else {
-      const all_tasks = tasks;
+      const all_tasks = [...tasks];
       const taskToUpdate = all_tasks[indexOfTaskToUpdate];
       all_tasks[indexOfTaskToUpdate] = taskInfo;
       let amount = totalAmount;
       amount += Number(taskInfo.totalPrice) - Number(taskToUpdate.totalPrice);
       setTotalAmount(amount);
       setIsTaskToUpdate(false);
+      setTasks(all_tasks);
     }
     setTaskInfo({
       taskName: "",
@@ -125,7 +159,7 @@ export const CreateInvoice = () => {
       dangerMode: true,
     });
     if (!willDelete) return;
-    const allTasks = tasks;
+    const allTasks = [...tasks];
     const taskToDelete = tasks[index];
     const total_amount = Number(totalAmount) - Number(taskToDelete.totalPrice);
     allTasks.splice(index, 1);
