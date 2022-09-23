@@ -11,6 +11,13 @@ import Paper from "@mui/material/Paper";
 import React, { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { getInvoicePayload } from "../../CommonComponents/invoicePayload";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_INVOICE, UPDATE_INVOICE } from "../../Store/Action_Constants";
+import { invoiceCreating, setLoading } from "../../Store/Slices/Invoice";
+import { useParams } from "react-router-dom";
+import Spinner from "../Spinner/Spinner";
 const columns = [
   { id: "taskName", label: "Task Name", minWidth: 100 },
   { id: "type", label: "Type", minWidth: 100 },
@@ -28,11 +35,12 @@ export const CreateInvoiceRight = ({
   deleteTask,
   editTask,
   shareInvoiceWith,
+  isInvoiceUpdate,
 }) => {
   const sender = JSON.parse(localStorage.getItem("sender"));
   const invoice_date = new Date(invoiceDate) + "";
   const due_date = new Date(dueDate) + "";
-
+  const dispatch = useDispatch();
   const [invoiceDetails, setInvoiceDetails] = React.useState({
     clientId: "",
     invoicedate: "",
@@ -41,7 +49,8 @@ export const CreateInvoiceRight = ({
     total_amount: 0,
     shareInvoiceWithEmail: "",
   });
-
+  const { invoiceId } = useParams();
+  const { loading } = useSelector((state) => state.invoices);
   useEffect(() => {
     setInvoiceDetails({
       clientId: selectedClient?.id,
@@ -66,8 +75,29 @@ export const CreateInvoiceRight = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(invoiceDetails, "<=====invoiceDetails");
-    console.log(JSON.stringify(invoiceDetails), "<=====invoiceDetails");
+
+    const payload = getInvoicePayload(invoiceDetails);
+    if (
+      !payload.client_id ||
+      !payload.duedate ||
+      !payload.invoicedate ||
+      !payload.invoicetotalvalue ||
+      payload?.tasks?.length === 0
+    ) {
+      toast.error("Please fill all the fields", {
+        toastId: "sender_form",
+      });
+      return;
+    }
+    dispatch(invoiceCreating(true));
+    dispatch(setLoading(true));
+
+    if (invoiceId) {
+      payload.id = invoiceId;
+      dispatch({ type: UPDATE_INVOICE, payload: payload });
+      return;
+    }
+    dispatch({ type: ADD_INVOICE, payload: payload });
   };
 
   return (
@@ -83,6 +113,7 @@ export const CreateInvoiceRight = ({
       }}
       className="border-left"
     >
+      <Spinner loading={loading} />
       <Box sx={{ display: "flex", width: "80%" }}>
         <Box sx={{ width: "50%" }}>
           <Typography component="h1" variant="h6" sx={{ fontWeight: 600 }}>
@@ -201,7 +232,7 @@ export const CreateInvoiceRight = ({
           variant="contained"
           sx={{ mt: 3, mb: 2, width: "40%" }}
         >
-          Submit
+          {invoiceId ? "Update Invoice " : "Submit"}
         </Button>
       </Box>
     </Box>

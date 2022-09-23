@@ -1,4 +1,3 @@
-import { Axios } from "axios";
 import { AXIOS } from "./Setup";
 
 export const fetchClients = (action) => {
