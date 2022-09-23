@@ -74,7 +74,6 @@
   .create_invoice{
     display:flex !important;
     max-width: 100%!important;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
@@ -91,9 +90,92 @@
 }
 
 .border-left{
-  border-top: 1px solid darkgrey;
-  border-left: none;
   margin-top: 10px;
 }
 
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px){
+  .css-h4tnjm-MuiContainer-root{
+    padding-left: 0!important;
+    padding-right: 0!important;
+  }
+ .create_invoice .css-y8ay40-MuiTableCell-root {
+  padding: 8px 0 !important; 
+  text-align: center;
+  min-width: 80px;
+ }
+ .create_invoice .css-1xxajqc-MuiTypography-root {
+  font-size: 20px;
+ }
+ .create_invoice .css-66i0it {
+   margin-top: 0px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+ }
+ .create_invoice .css-178yklu {
+  width: 90%;
+ }
+ .titleStyle {
+  margin-top: 10px ;
+  margin-left: 10px ;
+ }
+ .task_form h1 {
+  font-size: 20px;
+ }
+ .border-left .css-4s9q6 {
+  width: 90%;
+  padding-right: 0;
+ }
+ .create_invoice {
+  margin-top: 50px
+ }
+}
+
+@media only screen and (min-width: 376px) and (max-width: 767px){
+  .create_invoice{
+    display:flex !important;
+    max-width: 100%!important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .create_invoice .css-2l474x {
+    width: 100%;
+  }
+  .border-left .css-178yklu {
+    width: 100%;
+  }
+  .border-left {
+    width: 100% !important;
+    border-left:0;
+    border-top: 2px solid darkgrey;
+    padding-top: 15px;
+  }
+  .titleStyle {
+    margin-top: 10px ;
+    margin-left: 10px ;
+   }
+   .create_invoice .css-y8ay40-MuiTableCell-root {
+    padding: 8px 3px !important;
+    text-align: center;
+    min-width: 80px !important;
+   }
+   .textStyle{
+    line-height: 2;
+   }
+   .task_form {
+    padding-bottom: 10px;
+   }
+   .border-left .css-4s9q6 {
+    width: 100%;
+    padding-right: 0;
+   }
+   .create_invoice .css-66i0it {
+    margin-top: 0px;
+   padding-top: 12px;
+   padding-bottom: 5px;
+  }
+  .create_invoice .css-66i0it h1 {
+    font-size: 20px;
+  }
 }

@@ -92,7 +92,7 @@ export const CreateInvoiceRight = ({
           <Typography mt={0}>Pan No:-&nbsp;{sender.pan}</Typography>
         </Box>
         <Box sx={{ width: "50%" }}>
-          <Typography sx={{ fontWeight: 600 }}>Client</Typography>
+          <Typography className="textStyle" sx={{ fontWeight: 600 }}>Client</Typography>
           <Typography mt={1}>Name:-&nbsp;{selectedClient.name}</Typography>
           <Typography mt={0}>
             Company:-&nbsp;{selectedClient.companyName}
@@ -173,7 +173,7 @@ export const CreateInvoiceRight = ({
                         </TableRow>
                       );
                     })
-                  : "Please add some tasks"}
+                  : <div className="titleStyle">Please add some tasks</div>}
               </TableBody>
             </Table>
           </TableContainer>
