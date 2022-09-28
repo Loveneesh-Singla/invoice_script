@@ -30,6 +30,7 @@ export const CreateInvoice = () => {
   const [isTaskToUpdate, setIsTaskToUpdate] = useState(false);
   const [shareInvoiceWith, setShareInvoiceWith] = useState("");
   const [indexOfTaskToUpdate, setIndexOfTaskToUpdate] = useState();
+  const [error, setError] = React.useState({email:""})
   const { clients } = useSelector((state) => state.clients);
   const { invoiceCreating, invoiceToUpdate } = useSelector(
     (state) => state.invoices
@@ -169,7 +170,17 @@ export const CreateInvoice = () => {
     setTotalAmount(total_amount);
   };
 
+  const isValidEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
   const handleEmail = (event) => {
+    if(event.target.value !== "" && !isValidEmail(event.target.value)){
+      setError({...error, email:"Email is invalid"})
+    }
+    else{
+      setError({...error, email:""})
+    }
     setShareInvoiceWith(event.target.value);
   };
 
@@ -229,6 +240,7 @@ export const CreateInvoice = () => {
               onChange={handleEmail}
               value={shareInvoiceWith}
             />
+            <Typography className="emailError">{error.email}</Typography>
             <Box className="date_picker" mt={2}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>

@@ -94,6 +94,21 @@
 }
 
 }
+.errorStyle{
+  color: #cf0d0d;
+  font-size: 11px !important;
+  padding-left: 5px;
+}
+
+.emailError{
+  font-size: 11px !important;
+  color: #cf0d0d;
+  width: 85%;
+  padding-top: 2px;
+}
+.dateStyle {
+  font-size: 13px !important;
+}
 @media only screen and (min-width: 768px) and (max-width: 1200px){
   .css-h4tnjm-MuiContainer-root{
     padding-left: 0!important;
@@ -149,7 +164,7 @@
     width: 100% !important;
     border-left:0;
     border-top: 2px solid darkgrey;
-    padding-top: 15px;
+    padding-top: 0 !important;
   }
   .titleStyle {
     margin-top: 10px ;
@@ -177,5 +192,29 @@
   }
   .create_invoice .css-66i0it h1 {
     font-size: 20px;
+  }
+  .clientData {
+    padding-left: 30px;
+  }
+  .senderClientData {
+    flex-direction: column;
+    width: 100%;
+  }
+  .senderClientData h1 {
+    margin-top: 20px;
+  }
+  .senderClientData .css-11ze7cv{
+    width: 100%;
+  }
+  .senderClientData p {
+    font-size: 18px;
+    width: 100%;
+    margin-top:0 !important;
+  }
+  .boxStyle {
+    width: 100% !important;
+  }
+  .clientDate {
+    margin-top: 20px;
   }
 }

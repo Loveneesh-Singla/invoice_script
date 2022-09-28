@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -114,33 +114,42 @@ export const CreateInvoiceRight = ({
       className="border-left"
     >
       <Spinner loading={loading} />
-      <Box sx={{ display: "flex", width: "80%" }}>
+      <Box className="senderClientData" sx={{ display: "flex", width: "80%" }}>
         <Box sx={{ width: "50%" }}>
           <Typography component="h1" variant="h6" sx={{ fontWeight: 600 }}>
             Sender
           </Typography>
-          <Typography mt={1}>Name:-&nbsp;{sender.name}</Typography>
-          <Typography mt={0}>Pan No:-&nbsp;{sender.pan}</Typography>
+          <Typography mt={1}>Name:-&nbsp;&nbsp;&nbsp;{sender.name}</Typography>
+          <Typography mt={1}>Pan No:-&nbsp;&nbsp;{sender.pan}</Typography>
         </Box>
         <Box sx={{ width: "50%" }}>
-          <Typography className="textStyle" sx={{ fontWeight: 600 }}>
+          <Typography
+            className="textStyle"
+            sx={{ fontWeight: 600 }}
+            component="h1"
+            variant="h6"
+          >
             Client
           </Typography>
-          <Typography mt={1}>Name:-&nbsp;{selectedClient.name}</Typography>
-          <Typography mt={0}>
-            Company:-&nbsp;{selectedClient.companyName}
+          <Typography mt={1}>
+            Name:-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {selectedClient.name}
+          </Typography>
+          <Typography mt={1}>
+            Company:-&nbsp;&nbsp;&nbsp;&nbsp;{selectedClient.companyName}
           </Typography>
         </Box>
       </Box>
 
-      <Box sx={{ width: "80%", display: "flex" }}>
+      <Box
+        sx={{ width: "80%", display: "flex" }}
+        className="senderClientData clientDate"
+      >
         <Typography mt={1} sx={{ width: "50%" }}>
-          Invoice Date:- &nbsp;
-          {invoiceDetails?.invoicedate}
+          Invoice Date:- {invoiceDetails?.invoicedate}
         </Typography>
         <Typography mt={1}>
-          Due Date:- &nbsp;
-          {invoiceDetails?.duedate}
+          Due Date:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{invoiceDetails?.duedate}
         </Typography>
       </Box>
       <Box mt={3}>

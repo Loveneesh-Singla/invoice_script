@@ -39,6 +39,7 @@ export default function Add_Sender_Company() {
   });
   const [isSenderExist, setIsSenderExist] = React.useState(false);
   const { loading } = useSelector((state) => state.senderCompanyInfo);
+  const [error, setError] = React.useState({email:"", phone:""});
 
   React.useEffect(() => {
     sender_company = JSON.parse(localStorage.getItem("sender"));
@@ -76,7 +77,27 @@ export default function Add_Sender_Company() {
     });
   };
 
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
   const handleInput = (e) => {
+    if(e.target.name === "email"){
+      if (e.target.value !== "" && !isValidEmail(e.target.value)) {
+        setError({...error, email: 'Email is invalid'});
+      } else {
+        setError({...error, email: ""});
+      }
+    }
+    if(e.target.name === "phone"){
+      if(e.target.value !== "" && (e.target.value.length > 10 || e.target.value.length < 10)){
+        setError({...error, phone: 'Phone number must be atleast 10 numbers'});
+      }
+      else{
+        setError({...error, phone: ""})
+      }
+
+    }
     setSenderCompany({ ...senderCompany, [e.target.name]: e.target.value });
   };
 
@@ -130,6 +151,7 @@ export default function Add_Sender_Company() {
                     onChange={handleInput}
                     value={senderCompany.email}
                   />
+                  <Typography className="errorStyle">{error.email}</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -156,6 +178,7 @@ export default function Add_Sender_Company() {
                     onChange={handleInput}
                     value={senderCompany.phone}
                   />
+                  <Typography className="errorStyle">{error.phone}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
