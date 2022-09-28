@@ -27,7 +27,6 @@ function App() {
       />
 
       <BrowserRouter>
-        <Navbar />
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/add_sender" element={<Add_Sender_Company />} />
@@ -38,7 +37,6 @@ function App() {
           <Route path="/createInvoice" element={<CreateInvoice />} />
           <Route path="/updateInvoice/:invoiceId" element={<CreateInvoice />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </>
   );

@@ -29,7 +29,7 @@ export default function LoginPage() {
     if (success) {
       localStorage.setItem("token", "Bearer " + token);
       dispatch({ type: GET_SENDER_COMPANY });
-      navigate("/add_client");
+      navigate("/invoices");
     }
   }, [success, user]);
 

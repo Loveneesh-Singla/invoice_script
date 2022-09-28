@@ -1,5 +1,5 @@
 import { AXIOS } from "./Setup";
-
+import fileDownload from "js-file-download";
 export const createInvoice = (action) => {
   return AXIOS.post("/api/add-invoice", action?.payload);
 };
@@ -25,6 +25,15 @@ export const editInvoice = (action) => {
   return AXIOS.put("/api/update-invoice/", action?.payload);
 };
 
-export const _downloadPdf = (action) => {
-  return AXIOS.get(`/api/download-invoice/${action}`);
+export const _downloadPdf = async (action) => {
+  return AXIOS.get(`/api/generate-pdf/${action}`, {
+    responseType: "blob",
+  }).then((res) => {
+    console.log(res, "<========res");
+    fileDownload(res.data, "invoice.pdf");
+  });
+};
+
+export const mark_payment_done = (action) => {
+  return AXIOS.put(`/api/update-payment-status/${action}`);
 };

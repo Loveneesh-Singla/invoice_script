@@ -9,11 +9,13 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useDispatch, useSelector } from "react-redux";
 import DownloadIcon from "@mui/icons-material/Download";
+import Tooltip from "@mui/material/Tooltip";
 import {
   DELETE_INVOICE,
   DOWNLOAD_PDF,
   GET_CLIENTS,
   GET_INVOICES,
+  MARK_PAYMENT_DONE,
 } from "../../Store/Action_Constants";
 import Spinner from "../Spinner/Spinner";
 import { invoiceCreating, setLoading } from "../../Store/Slices/Invoice";
@@ -22,14 +24,15 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
-
+import { Button } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 const columns = [
   { id: "Invoice_Number", label: "Invoice Number ", minWidth: 100 },
   { id: "Client_Name", label: "Client Name ", minWidth: 100 },
   { id: "Due_Date", label: "Due Date ", minWidth: 100 },
   { id: "Submitted_Date", label: "Submitted Date ", minWidth: 100 },
   { id: "Total_Amount", label: "Total Amount", minWidth: 100 },
-  { id: "Payment_Status", label: "Payment Status ", minWidth: 100 },
+  { id: "payment_status", label: "Payment Status ", minWidth: 100 },
   { id: "Paid_On", label: "Paid On", minWidth: 100 },
   { id: "actions", label: "ACTIONS", minWidth: 100 },
 ];
@@ -99,20 +102,39 @@ export const RenderInvoiceTable = () => {
   React.useEffect(() => {
     const _invoices = invoices?.map((invoice, ind) => {
       const client = clients.find((client) => client.id === invoice.client_id);
+      const paidOn = invoice?.paid_on?.split(" ");
       return {
         Invoice_Number: invoice.id || "-",
         Client_Name: client?.name || "-",
         Due_Date: invoice.duedate || "-",
         Submitted_Date: invoice.invoicedate || "-",
         Total_Amount: invoice.invoicetotalvalue || "-",
-        Payment_Status: invoice.id || "-",
-        Paid_On: invoice.id,
+        payment_status: invoice?.payment_status || "-",
+        Paid_On: paidOn?.length > 0 ? paidOn[0] : "- ",
         actions: "",
       };
     });
     setInvoicesData(_invoices);
   }, [invoices]);
 
+  const handlePaymentStatus = async (index) => {
+    const invoice_id = invoices[index].id;
+    const willUpdatePaymentStatus = await swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to mark the payment status done?",
+      icon: "warning",
+      dangerMode: true,
+    });
+    if (!willUpdatePaymentStatus) return;
+
+    dispatch(setLoading(true));
+    const payload = {
+      invoiceId: invoice_id,
+      page: page,
+      row: rowsPerPage,
+    };
+    dispatch({ type: MARK_PAYMENT_DONE, payload: payload });
+  };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <Spinner loading={loading} />
@@ -147,23 +169,42 @@ export const RenderInvoiceTable = () => {
                           <TableCell key={column.id} align={column.align}>
                             {column.id === "actions" ? (
                               <Box sx={{ display: "flex" }}>
-                                <EditIcon
-                                  className="cursor_pointer"
-                                  onClick={() => editInvoice(index)}
-                                />
+                                <Tooltip title="Update Invoice">
+                                  <EditIcon
+                                    className="cursor_pointer"
+                                    onClick={() => editInvoice(index)}
+                                  />
+                                </Tooltip>
                                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                <DeleteForeverIcon
-                                  onClick={() => deleteInvoice(index)}
-                                  className="cursor_pointer"
-                                />
+                                <Tooltip title="Delete Invoice">
+                                  <DeleteForeverIcon
+                                    onClick={() => deleteInvoice(index)}
+                                    className="cursor_pointer"
+                                  />
+                                </Tooltip>
                                 &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
-                                <DownloadIcon
-                                  className="cursor_pointer"
-                                  onClick={() => downloadInvoicePdf(index)}
-                                />
+                                <Tooltip title="Download Invoice">
+                                  <DownloadIcon
+                                    className="cursor_pointer"
+                                    onClick={() => downloadInvoicePdf(index)}
+                                  />
+                                </Tooltip>
+                              </Box>
+                            ) : column.id === "payment_status" ? (
+                              <Box sx={{ display: "flex" }}>
+                                {value}&nbsp;&nbsp;&nbsp;
+                                {value !== "paid" && (
+                                  <Tooltip title="Mark Payment Done">
+                                    <CheckCircleOutlineIcon
+                                      sx={{ color: "green" }}
+                                      className="cursor_pointer"
+                                      onClick={() => handlePaymentStatus(index)}
+                                    />
+                                  </Tooltip>
+                                )}
                               </Box>
                             ) : (
-                              value
+                              <>{value}</>
                             )}
                           </TableCell>
                         );

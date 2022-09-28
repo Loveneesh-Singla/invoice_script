@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { invoiceCreating } from "../../Store/Slices/Invoice";
+import { Navbar } from "../Navbar/Navbar";
+import { Footer } from "../Footer/Footer";
 
 export const Invoice = () => {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ export const Invoice = () => {
 
   return (
     <ProtectedRoute>
+      <Navbar />
       <Box mt={10} ml={2} mr={2} className="minHeight">
         <Box className="client_table_upper">
           <Typography variant="h5">ALL INVOICES</Typography>
@@ -27,6 +30,7 @@ export const Invoice = () => {
         </Box>
         <Box mt={2}>{<RenderInvoiceTable />}</Box>
       </Box>
+      <Footer />
     </ProtectedRoute>
   );
 };

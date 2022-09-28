@@ -3,6 +3,7 @@ import {
   editInvoice,
   fetchInvoice,
   fetchInvoices,
+  mark_payment_done,
   removeInvoice,
   _downloadPdf,
 } from "../../Services/Invoice_Services";
@@ -12,6 +13,7 @@ import {
   DOWNLOAD_PDF,
   GET_INVOICE,
   GET_INVOICES,
+  MARK_PAYMENT_DONE,
   UPDATE_INVOICE,
 } from "../Action_Constants";
 import { takeLatest, put, call } from "redux-saga/effects";
@@ -95,7 +97,24 @@ function* updateInvoice(action) {
 function* downloadPdf(action) {
   try {
     const response = yield call(_downloadPdf, action?.payload);
+    console.log(response, "<====-response");
     yield put(setLoading(false));
+  } catch (e) {
+    toast.error(e?.response?.error?.[0] || e?.response?.message);
+    yield put(setLoading(false));
+  }
+}
+
+function* markPaymentDone(action) {
+  try {
+    const response = yield call(mark_payment_done, action?.payload?.invoiceId);
+    if (response.status === 200) {
+      toast.success("Invoice has been updated successfully");
+      store.dispatch({
+        type: GET_INVOICES,
+        payload: action,
+      });
+    }
   } catch (e) {
     toast.error(e?.response?.data?.error?.[0] || e?.response?.data?.message);
     yield put(setLoading(false));
@@ -109,4 +128,5 @@ export function* invoiceSaga() {
   yield takeLatest(GET_INVOICE, getInvoice);
   yield takeLatest(UPDATE_INVOICE, updateInvoice);
   yield takeLatest(DOWNLOAD_PDF, downloadPdf);
+  yield takeLatest(MARK_PAYMENT_DONE, markPaymentDone);
 }

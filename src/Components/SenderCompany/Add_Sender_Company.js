@@ -19,6 +19,8 @@ import {
   UPDATE_SENDER_COMPANY,
 } from "../../Store/Action_Constants";
 import Spinner from "../Spinner/Spinner";
+import { Footer } from "../Footer/Footer";
+import { Navbar } from "../Navbar/Navbar";
 
 const theme = createTheme();
 let sender_company;
@@ -80,6 +82,7 @@ export default function Add_Sender_Company() {
 
   return (
     <ProtectedRoute>
+      <Navbar />
       <Spinner loading={loading} />
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs" className="minHeight">
@@ -92,7 +95,7 @@ export default function Add_Sender_Company() {
               alignItems: "center",
             }}
           >
-            <Typography component="h1" variant="h5">  
+            <Typography component="h1" variant="h5">
               {isSenderExist ? "Update Company Info" : "Add Company Info"}
             </Typography>
             <Box
@@ -232,6 +235,7 @@ export default function Add_Sender_Company() {
           </Box>
         </Container>
       </ThemeProvider>
+      <Footer />
     </ProtectedRoute>
   );
 }

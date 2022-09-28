@@ -19,6 +19,8 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useNavigate, useParams } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import swal from "sweetalert";
+import { Navbar } from "../Navbar/Navbar";
+import { Footer } from "../Footer/Footer";
 const theme = createTheme();
 
 export const CreateInvoice = () => {
@@ -173,6 +175,7 @@ export const CreateInvoice = () => {
 
   return (
     <ProtectedRoute>
+      <Navbar />
       <Spinner loading={false} />
       <ThemeProvider theme={theme}>
         <Container
@@ -326,6 +329,7 @@ export const CreateInvoice = () => {
           />
         </Container>
       </ThemeProvider>
+      <Footer />
     </ProtectedRoute>
   );
 };

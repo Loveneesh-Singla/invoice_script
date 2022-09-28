@@ -123,7 +123,9 @@ export const CreateInvoiceRight = ({
           <Typography mt={0}>Pan No:-&nbsp;{sender.pan}</Typography>
         </Box>
         <Box sx={{ width: "50%" }}>
-          <Typography className="textStyle" sx={{ fontWeight: 600 }}>Client</Typography>
+          <Typography className="textStyle" sx={{ fontWeight: 600 }}>
+            Client
+          </Typography>
           <Typography mt={1}>Name:-&nbsp;{selectedClient.name}</Typography>
           <Typography mt={0}>
             Company:-&nbsp;{selectedClient.companyName}
@@ -164,47 +166,49 @@ export const CreateInvoiceRight = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {invoiceDetails?.allTasks?.length > 0
-                  ? invoiceDetails?.allTasks?.map((row, index) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            let value = row[column.id];
-                            return (
-                              <TableCell
-                                key={column.id}
-                                align={column.align}
-                                sx={{ width: "100px", overflowX: "hidden" }}
-                              >
-                                {column.id === "actions" ? (
-                                  <Box sx={{ display: "flex" }}>
-                                    <EditIcon
-                                      className="cursor_pointer"
-                                      onClick={() => editTask(index)}
-                                    />
-                                    &nbsp; &nbsp;&nbsp; &nbsp;
-                                    <DeleteForeverIcon
-                                      onClick={() => deleteTask(index)}
-                                      className="cursor_pointer"
-                                    />
-                                  </Box>
-                                ) : column.id === "taskName" ? (
-                                  `${value.slice(0, 7)}..`
-                                ) : (
-                                  value
-                                )}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })
-                  : <div className="titleStyle">Please add some tasks</div>}
+                {invoiceDetails?.allTasks?.length > 0 ? (
+                  invoiceDetails?.allTasks?.map((row, index) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.code}
+                      >
+                        {columns.map((column) => {
+                          let value = row[column.id];
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              sx={{ width: "100px", overflowX: "hidden" }}
+                            >
+                              {column.id === "actions" ? (
+                                <Box sx={{ display: "flex" }}>
+                                  <EditIcon
+                                    className="cursor_pointer"
+                                    onClick={() => editTask(index)}
+                                  />
+                                  &nbsp; &nbsp;&nbsp; &nbsp;
+                                  <DeleteForeverIcon
+                                    onClick={() => deleteTask(index)}
+                                    className="cursor_pointer"
+                                  />
+                                </Box>
+                              ) : column.id === "taskName" ? (
+                                `${value.slice(0, 7)}..`
+                              ) : (
+                                value
+                              )}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })
+                ) : (
+                  <div className="titleStyle">Please add some tasks</div>
+                )}
               </TableBody>
             </Table>
           </TableContainer>

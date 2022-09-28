@@ -15,6 +15,8 @@ import { setLoading } from "../../Store/Slices/Clients";
 import { SAVE_CLIENT, UPDATE_CLIENT } from "../../Store/Action_Constants";
 import Spinner from "../Spinner/Spinner";
 import { useNavigate, useParams } from "react-router-dom";
+import { Navbar } from "../Navbar/Navbar";
+import { Footer } from "../Footer/Footer";
 
 const theme = createTheme();
 
@@ -83,6 +85,7 @@ export default function Add_Client() {
 
   return (
     <ProtectedRoute>
+      <Navbar />
       <Spinner loading={loading} />
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -230,6 +233,7 @@ export default function Add_Client() {
           </Box>
         </Container>
       </ThemeProvider>
+      <Footer />
     </ProtectedRoute>
   );
 }

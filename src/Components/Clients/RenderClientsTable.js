@@ -154,7 +154,7 @@ export const RenderClientsTable = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={clientsData.length}
+        count={clientsData?.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
