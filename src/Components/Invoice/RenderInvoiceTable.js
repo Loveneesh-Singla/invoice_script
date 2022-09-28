@@ -24,8 +24,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+
 const columns = [
   { id: "Invoice_Number", label: "Invoice Number ", minWidth: 100 },
   { id: "Client_Name", label: "Client Name ", minWidth: 100 },
@@ -135,6 +135,7 @@ export const RenderInvoiceTable = () => {
     };
     dispatch({ type: MARK_PAYMENT_DONE, payload: payload });
   };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <Spinner loading={loading} />

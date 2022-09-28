@@ -25,13 +25,8 @@ export const editInvoice = (action) => {
   return AXIOS.put("/api/update-invoice/", action?.payload);
 };
 
-export const _downloadPdf = async (action) => {
-  return AXIOS.get(`/api/generate-pdf/${action}`, {
-    responseType: "blob",
-  }).then((res) => {
-    console.log(res, "<========res");
-    fileDownload(res.data, "invoice.pdf");
-  });
+export const _downloadPdf = (action) => {
+  return AXIOS.get(`/api/generate-pdf/${action}`);
 };
 
 export const mark_payment_done = (action) => {

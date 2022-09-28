@@ -22,6 +22,7 @@ import {
   invoiceCreated,
   setInvoiceToUpdate,
   setLoading,
+  setPDFUrl,
   _saveInvoice,
 } from "../Slices/Invoice";
 import { store } from "../Store";
@@ -97,7 +98,8 @@ function* updateInvoice(action) {
 function* downloadPdf(action) {
   try {
     const response = yield call(_downloadPdf, action?.payload);
-    console.log(response, "<====-response");
+    window.open(response?.data?.url);
+    yield put(setPDFUrl(response?.data?.url));
     yield put(setLoading(false));
   } catch (e) {
     toast.error(e?.response?.error?.[0] || e?.response?.message);

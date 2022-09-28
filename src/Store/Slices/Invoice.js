@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   invoiceCreating: false,
   invoiceToUpdate: {},
+  pdfUrl: "",
 };
 
 const invoices = createSlice({
@@ -44,6 +45,12 @@ const invoices = createSlice({
         loading: false,
       };
     },
+    setPDFUrl: (state, action) => {
+      return {
+        ...state,
+        pdfUrl: action?.payload,
+      };
+    },
   },
 });
 
@@ -53,5 +60,6 @@ export const {
   invoiceCreated,
   invoiceCreating,
   setInvoiceToUpdate,
+  setPDFUrl,
 } = invoices.actions;
 export default invoices.reducer;
