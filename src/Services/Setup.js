@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const AXIOS = axios.create({
-  baseURL: "http://dev.zestgeek.com/invoiceGenrate/api",
+  baseURL: "https://dev.zestgeek.com/invoiceGenrate/api",
 });
 
 AXIOS.interceptors.request.use(
