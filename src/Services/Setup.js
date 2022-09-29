@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const AXIOS = axios.create({
-  baseURL: "https://dev.zestgeek.com",
+  baseURL: "http://209.97.142.219:8080",
 });
 
 AXIOS.interceptors.request.use(
