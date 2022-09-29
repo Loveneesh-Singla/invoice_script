@@ -1,5 +1,5 @@
 import { AXIOS } from "./Setup";
-import fileDownload from "js-file-download";
+
 export const createInvoice = (action) => {
   return AXIOS.post("/api/add-invoice", action?.payload);
 };
