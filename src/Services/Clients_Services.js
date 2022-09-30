@@ -6,17 +6,21 @@ export const fetchClients = (action) => {
     rows: action?.payload?.row ? action?.payload?.row : 10,
   };
 
-  return AXIOS.get("/api/all-client-list", { params });
+  return AXIOS.get("all-client-list", { params });
 };
 
 export const removeClient = (action) => {
-  return AXIOS.delete(`/api/delete-client/${action}`);
+  return AXIOS.delete(`delete-client/${action}`);
 };
 
 export const createClient = (action) => {
-  return AXIOS.post("/api/add-client", action?.payload);
+  return AXIOS.post("add-client", action?.payload);
 };
 
 export const editClient = (action) => {
-  return AXIOS.put("/api/update-client/", action?.payload);
+  return AXIOS.put("update-client", action?.payload);
+};
+
+export const fetchClient = (action) => {
+  return AXIOS.get(`client/${action}`);
 };

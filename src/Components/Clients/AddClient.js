@@ -12,7 +12,11 @@ import { getClientPayload } from "../../CommonComponents/clientPayload";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../../Store/Slices/Clients";
-import { SAVE_CLIENT, UPDATE_CLIENT } from "../../Store/Action_Constants";
+import {
+  GET_CLIENT,
+  SAVE_CLIENT,
+  UPDATE_CLIENT,
+} from "../../Store/Action_Constants";
 import Spinner from "../Spinner/Spinner";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../Navbar/Navbar";
@@ -23,10 +27,11 @@ const theme = createTheme();
 export default function Add_Client() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { loading, clientCreating, clients } = useSelector(
+  const { loading, clientCreating, clients, client } = useSelector(
     (state) => state.clients
   );
   const navigate = useNavigate();
+  const isClientCreating = JSON.parse(localStorage.getItem("clientcreating"));
   const [clientInfo, setClientInfo] = React.useState({
     name: "",
     address: "",
@@ -38,7 +43,7 @@ export default function Add_Client() {
     tan: "",
     email: "",
   });
-  const [ error, setError] = React.useState({email:"", phone:""})
+  const [error, setError] = React.useState({ email: "", phone: "" });
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -69,36 +74,48 @@ export default function Add_Client() {
   };
 
   React.useEffect(() => {
+    if (id) setClientInfo(client);
+  }, [client]);
+
+  React.useEffect(() => {
     if (id) {
-      setClientInfo(clients[id]);
+      dispatch(setLoading(true));
+      dispatch({ type: GET_CLIENT, payload: id });
     }
   }, []);
 
   React.useEffect(() => {
-    if (!clientCreating) {
+    if (
+      !clientCreating &&
+      (!isClientCreating || isClientCreating === "false")
+    ) {
       navigate("/clients");
     }
   }, [clientCreating]);
 
   const isValidEmail = (email) => {
     return /\S+@\S+\.\S+/.test(email);
-  }
+  };
 
   const handleInput = (e) => {
-    if(e.target.name === "email"){
-      if(e.target.value !== "" && !isValidEmail(e.target.value)){
-        setError({...error, email: "Email is invalid"})
-      }
-      else{
-        setError({...error, email: ""})
+    if (e.target.name === "email") {
+      if (e.target.value !== "" && !isValidEmail(e.target.value)) {
+        setError({ ...error, email: "Email is invalid" });
+      } else {
+        setError({ ...error, email: "" });
       }
     }
-    if(e.target.name === "phone"){
-      if(e.target.value !== "" && (e.target.value.length > 10 || e.target.value.length < 10)){
-        setError({...error, phone: "Phone number must be atleast 10 numbers"})
-      }
-      else{
-        setError({...error, phone:""})
+    if (e.target.name === "phone") {
+      if (
+        e.target.value !== "" &&
+        (e.target.value.length > 10 || e.target.value.length < 10)
+      ) {
+        setError({
+          ...error,
+          phone: "Phone number must be atleast 10 numbers",
+        });
+      } else {
+        setError({ ...error, phone: "" });
       }
     }
     setClientInfo({ ...clientInfo, [e.target.name]: e.target.value });

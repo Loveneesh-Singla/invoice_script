@@ -4,6 +4,7 @@ const initialState = {
   clients: [],
   loading: false,
   clientCreating: false,
+  client: {},
 };
 
 const clients = createSlice({
@@ -17,6 +18,13 @@ const clients = createSlice({
         loading: false,
       };
     },
+    _saveClient: (state, action) => {
+      return {
+        ...state,
+        client: action?.payload,
+        loading: false,
+      };
+    },
     setLoading: (state, action) => {
       return {
         ...state,
@@ -24,6 +32,7 @@ const clients = createSlice({
       };
     },
     clientCreated: (state, action) => {
+      localStorage.setItem("clientcreating", false);
       return {
         ...state,
         loading: false,
@@ -39,6 +48,11 @@ const clients = createSlice({
   },
 });
 
-export const { setLoading, _saveClients, clientCreated, clientCreating } =
-  clients.actions;
+export const {
+  setLoading,
+  _saveClients,
+  clientCreated,
+  clientCreating,
+  _saveClient,
+} = clients.actions;
 export default clients.reducer;

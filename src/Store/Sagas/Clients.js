@@ -3,14 +3,21 @@ import {
   removeClient,
   createClient,
   editClient,
+  fetchClient,
 } from "../../Services/Clients_Services";
 import {
   DELETE_CLIENT,
+  GET_CLIENT,
   GET_CLIENTS,
   SAVE_CLIENT,
   UPDATE_CLIENT,
 } from "../Action_Constants";
-import { _saveClients, setLoading, clientCreated } from "../Slices/Clients";
+import {
+  _saveClients,
+  setLoading,
+  clientCreated,
+  _saveClient,
+} from "../Slices/Clients";
 import { takeLatest, put, call } from "redux-saga/effects";
 import { toast } from "react-toastify";
 import { store } from "../Store";
@@ -19,6 +26,17 @@ function* getClients(action) {
   try {
     const response = yield call(fetchClients, action);
     yield put(_saveClients(response?.data?.data));
+  } catch (e) {
+    toast.error(e?.response?.data?.error?.[0] || e?.response?.data?.message);
+    yield put(setLoading(false));
+  }
+}
+
+function* getClient(action) {
+  try {
+    const response = yield call(fetchClient, action.payload);
+    console.log(response, "<===response---");
+    yield put(_saveClient(response?.data?.data));
   } catch (e) {
     toast.error(e?.response?.data?.error?.[0] || e?.response?.data?.message);
     yield put(setLoading(false));
@@ -77,4 +95,5 @@ export function* clientsSaga() {
   yield takeLatest(DELETE_CLIENT, deleteClient);
   yield takeLatest(SAVE_CLIENT, saveClient);
   yield takeLatest(UPDATE_CLIENT, updateClient);
+  yield takeLatest(GET_CLIENT, getClient);
 }

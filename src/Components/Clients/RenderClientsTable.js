@@ -74,8 +74,10 @@ export const RenderClientsTable = () => {
   };
 
   const editClient = (index) => {
+    localStorage.setItem("clientcreating", true);
+    const client = clients[index];
     dispatch(clientCreating(true));
-    navigate(`/update_client/${index}`);
+    navigate(`/update_client/${client.id}`);
   };
 
   React.useEffect(() => {

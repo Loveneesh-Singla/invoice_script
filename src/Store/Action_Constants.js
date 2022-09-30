@@ -13,3 +13,4 @@ export const GET_INVOICE = "GET_INVOICE";
 export const UPDATE_INVOICE = "UPDATE_INVOICE";
 export const DOWNLOAD_PDF = "DOWNLOAD_PDF";
 export const MARK_PAYMENT_DONE = "MARK_PAYMENT_DONE";
+export const GET_CLIENT = "GET_CLIENT";

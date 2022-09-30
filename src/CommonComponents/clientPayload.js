@@ -8,5 +8,6 @@ export const getClientPayload = (data) => {
     gstin: data.get("gstin"),
     email: data.get("email"),
     companyname: data.get("companyname"),
+    pin: data.get("pin"),
   };
 };

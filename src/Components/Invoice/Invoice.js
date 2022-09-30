@@ -13,7 +13,7 @@ export const Invoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const addClient = () => {
+  const addInvoice = () => {
     dispatch(invoiceCreating(true));
     navigate("/createInvoice");
   };
@@ -24,7 +24,7 @@ export const Invoice = () => {
       <Box mt={10} ml={2} mr={2} className="minHeight">
         <Box className="client_table_upper">
           <Typography variant="h5">ALL INVOICES</Typography>
-          <Button sx={{ border: "1px solid" }} onClick={addClient}>
+          <Button sx={{ border: "1px solid" }} onClick={addInvoice}>
             Create Invoice
           </Button>
         </Box>

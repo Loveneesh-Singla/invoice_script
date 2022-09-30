@@ -1,7 +1,7 @@
 import { AXIOS } from "./Setup";
 
 export const createInvoice = (action) => {
-  return AXIOS.post("/api/add-invoice", action?.payload);
+  return AXIOS.post("add-invoice", action?.payload);
 };
 
 export const fetchInvoices = (action) => {
@@ -10,25 +10,25 @@ export const fetchInvoices = (action) => {
     rows: action?.payload?.row ? action?.payload?.row : 10,
   };
 
-  return AXIOS.get("api/all-client-invoice", { params });
+  return AXIOS.get("all-client-invoice", { params });
 };
 
 export const removeInvoice = (action) => {
-  return AXIOS.delete(`/api/delete-invoice/${action}`);
+  return AXIOS.delete(`delete-invoice/${action}`);
 };
 
 export const fetchInvoice = (action) => {
-  return AXIOS.get(`/api/get-invoice/${action}`);
+  return AXIOS.get(`get-invoice/${action}`);
 };
 
 export const editInvoice = (action) => {
-  return AXIOS.put("/api/update-invoice/", action?.payload);
+  return AXIOS.put("update-invoice", action?.payload);
 };
 
 export const _downloadPdf = (action) => {
-  return AXIOS.get(`/api/generate-pdf/${action}`);
+  return AXIOS.get(`generate-pdf/${action}`);
 };
 
 export const mark_payment_done = (action) => {
-  return AXIOS.put(`/api/update-payment-status/${action}`);
+  return AXIOS.put(`update-payment-status/${action}`);
 };
