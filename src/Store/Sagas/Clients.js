@@ -35,7 +35,6 @@ function* getClients(action) {
 function* getClient(action) {
   try {
     const response = yield call(fetchClient, action.payload);
-    console.log(response, "<===response---");
     yield put(_saveClient(response?.data?.data));
   } catch (e) {
     toast.error(e?.response?.data?.error?.[0] || e?.response?.data?.message);

@@ -10,7 +10,7 @@ import { Navbar } from "../Navbar/Navbar";
 import { Footer } from "../Footer/Footer";
 
 export const Clients = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   localStorage.setItem("clientcreating", false);
 

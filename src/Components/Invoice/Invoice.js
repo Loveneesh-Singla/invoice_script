@@ -12,8 +12,10 @@ import { Footer } from "../Footer/Footer";
 export const Invoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  localStorage.setItem("invoicecreating", false);
 
   const addInvoice = () => {
+    localStorage.setItem("invoicecreating", true);
     dispatch(invoiceCreating(true));
     navigate("/createInvoice");
   };

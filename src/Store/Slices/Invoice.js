@@ -26,6 +26,7 @@ const invoices = createSlice({
       };
     },
     invoiceCreated: (state, action) => {
+      localStorage.setItem("invoicecreating", false);
       return {
         ...state,
         loading: false,

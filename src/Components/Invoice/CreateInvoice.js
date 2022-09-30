@@ -21,16 +21,22 @@ import Stack from "@mui/material/Stack";
 import swal from "sweetalert";
 import { Navbar } from "../Navbar/Navbar";
 import { Footer } from "../Footer/Footer";
+import Checkbox from "@mui/material/Checkbox";
+import moment from "moment";
+import CurrencyList from "currency-list";
 const theme = createTheme();
 
 export const CreateInvoice = () => {
+  let currentDate = moment(new Date()).format("MMM DD YYYY");
   const dispatch = useDispatch();
-  const [invoiceDate, setInvoiceDate] = React.useState();
+  const [invoiceDate, setInvoiceDate] = React.useState(currentDate);
   const [dueDate, setDueDate] = React.useState();
   const [isTaskToUpdate, setIsTaskToUpdate] = useState(false);
   const [shareInvoiceWith, setShareInvoiceWith] = useState("");
   const [indexOfTaskToUpdate, setIndexOfTaskToUpdate] = useState();
-  const [error, setError] = React.useState({email:""})
+  const [show_sender_bank_details, set_show_sender_bank_details] =
+    useState(true);
+  const [error, setError] = React.useState({ email: "" });
   const { clients } = useSelector((state) => state.clients);
   const { invoiceCreating, invoiceToUpdate } = useSelector(
     (state) => state.invoices
@@ -57,7 +63,8 @@ export const CreateInvoice = () => {
   const handleDueDateChange = (newValue) => {
     setDueDate(newValue);
   };
-
+  const isInvoiceCreating = JSON.parse(localStorage.getItem("invoicecreating"));
+  console.log(CurrencyList.getAll(), "<----------currncyList");
   React.useEffect(() => {
     if (invoiceId) {
       dispatch(setLoading(true));
@@ -78,11 +85,18 @@ export const CreateInvoice = () => {
         name: invoiceToUpdate?.client_detail?.name,
         companyName: invoiceToUpdate?.client_detail?.companyname,
       });
+
+      set_show_sender_bank_details(
+        invoiceToUpdate.show_sender_bank_details === "0" ? false : true
+      );
     }
   }, [invoiceToUpdate]);
 
   React.useEffect(() => {
-    if (!invoiceCreating) {
+    if (
+      !invoiceCreating &&
+      (!isInvoiceCreating || isInvoiceCreating === "false")
+    ) {
       navigate("/invoices");
     }
   }, [invoiceCreating]);
@@ -115,6 +129,17 @@ export const CreateInvoice = () => {
   };
 
   const handleInput = (event) => {
+    const re = /[0-9]+/g;
+    if (
+      event.target.name === "totalPrice" ||
+      event.target.name === "hourly_units_worked"
+    ) {
+      if (event.target.value === "" || re.test(event.target.value)) {
+        setTaskInfo({ ...taskInfo, [event.target.name]: event.target.value });
+      } else {
+        return;
+      }
+    }
     setTaskInfo({ ...taskInfo, [event.target.name]: event.target.value });
   };
 
@@ -172,14 +197,17 @@ export const CreateInvoice = () => {
 
   const isValidEmail = (email) => {
     return /\S+@\S+\.\S+/.test(email);
-  }
+  };
+
+  const handle_show_sender_bank_details = () => {
+    set_show_sender_bank_details(!show_sender_bank_details);
+  };
 
   const handleEmail = (event) => {
-    if(event.target.value !== "" && !isValidEmail(event.target.value)){
-      setError({...error, email:"Email is invalid"})
-    }
-    else{
-      setError({...error, email:""})
+    if (event.target.value !== "" && !isValidEmail(event.target.value)) {
+      setError({ ...error, email: "Email is invalid" });
+    } else {
+      setError({ ...error, email: "" });
     }
     setShareInvoiceWith(event.target.value);
   };
@@ -229,7 +257,6 @@ export const CreateInvoice = () => {
               </Box>
             </Box>
             <TextField
-              required
               fullWidth
               id="shareInvoiceWith"
               label="Share Invoice To Email"
@@ -264,6 +291,24 @@ export const CreateInvoice = () => {
                   />
                 </Stack>
               </LocalizationProvider>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                width: "87%",
+                justifyContent: "space-between",
+              }}
+              mt={1}
+            >
+              <Typography sx={{ fontWeight: 500 }}>
+                Add Sender Bank Details on Invoice
+              </Typography>
+              <Checkbox
+                checked={show_sender_bank_details}
+                onChange={handle_show_sender_bank_details}
+                inputProps={{ "aria-label": "controlled" }}
+                sx={{ padding: 0 }}
+              />
             </Box>
             <Box className="task_form" component="form" onSubmit={handleSubmit}>
               <Typography
@@ -309,20 +354,23 @@ export const CreateInvoice = () => {
                 onChange={handleInput}
                 value={taskInfo.hourly_units_worked}
               />
-              <TextField
-                required
-                id="totalPrice"
-                label="Total Price"
-                name="totalPrice"
-                autoComplete="totalPrice"
-                sx={{ width: "87%", marginTop: 2 }}
-                inputProps={{ sx: { height: 10, marginTop: 1 } }}
-                onChange={handleInput}
-                value={taskInfo.totalPrice}
-              />
+              <Box sx={{ width: "87%" }}>
+                <TextField
+                  required
+                  id="totalPrice"
+                  label="Total Price"
+                  name="totalPrice"
+                  autoComplete="totalPrice"
+                  sx={{ width: "100%", marginTop: 2 }}
+                  inputProps={{ sx: { height: 10, marginTop: 1 } }}
+                  onChange={handleInput}
+                  value={taskInfo.totalPrice}
+                />
+              </Box>
+
               <Button
                 type="submit"
-                sx={{ width: "87%", marginTop: 2 }}
+                sx={{ width: "87%", marginTop: 2, marginBottom: 1.5 }}
                 variant="contained"
               >
                 Submit
@@ -338,6 +386,7 @@ export const CreateInvoice = () => {
             deleteTask={deleteTask}
             editTask={editTask}
             shareInvoiceWith={shareInvoiceWith}
+            show_sender_bank_details={show_sender_bank_details}
           />
         </Container>
       </ThemeProvider>

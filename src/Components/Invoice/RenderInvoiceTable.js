@@ -88,6 +88,7 @@ export const RenderInvoiceTable = () => {
   };
 
   const editInvoice = (index) => {
+    localStorage.setItem("invoicecreating", true);
     const invoice_id = invoices[index].id;
     dispatch(invoiceCreating(true));
     navigate(`/updateInvoice/${invoice_id}`);
@@ -101,11 +102,10 @@ export const RenderInvoiceTable = () => {
 
   React.useEffect(() => {
     const _invoices = invoices?.map((invoice, ind) => {
-      const client = clients.find((client) => client.id === invoice.client_id);
       const paidOn = invoice?.paid_on?.split(" ");
       return {
         Invoice_Number: invoice.id || "-",
-        Client_Name: client?.name || "-",
+        Client_Name: invoice?.client_detail?.name || "-",
         Due_Date: invoice.duedate || "-",
         Submitted_Date: invoice.invoicedate || "-",
         Total_Amount: invoice.invoicetotalvalue || "-",

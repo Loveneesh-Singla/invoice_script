@@ -6,5 +6,7 @@ export const getInvoicePayload = (data) => {
     shareInvoiceWithEmail: data?.shareInvoiceWithEmail,
     invoicetotalvalue: data?.total_amount,
     tasks: JSON.stringify(data?.allTasks),
+    show_sender_bank_details: data.show_sender_bank_details ? 1 : 0,
+    currency_type: "rupee",
   };
 };
