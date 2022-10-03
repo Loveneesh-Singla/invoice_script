@@ -83,6 +83,7 @@ export const CreateInvoiceRight = ({
     shareInvoiceWith,
     show_sender_bank_details,
     currencyType,
+    currency_symbol,
   ]);
 
   const handleSubmit = (event) => {

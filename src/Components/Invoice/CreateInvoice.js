@@ -91,7 +91,10 @@ export const CreateInvoice = () => {
       set_show_sender_bank_details(
         invoiceToUpdate.show_sender_bank_details === "0" ? false : true
       );
-      setCurrencyType(invoiceToUpdate.currency_type);
+      setCurrencyType(
+        invoiceToUpdate.currency_type + " " + invoiceToUpdate.currency_symbol
+      );
+      set_currency_symbol(invoiceToUpdate.currency_symbol);
     }
   }, [invoiceToUpdate]);
 
