@@ -66,6 +66,7 @@ export const RenderClientsTable = () => {
       title: "Are you sure?",
       text: "Are you sure that you want to delete this client?",
       icon: "warning",
+      buttons: true,
       dangerMode: true,
     });
     if (!willDelete) return;

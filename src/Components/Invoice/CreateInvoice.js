@@ -91,6 +91,7 @@ export const CreateInvoice = () => {
       set_show_sender_bank_details(
         invoiceToUpdate.show_sender_bank_details === "0" ? false : true
       );
+      setCurrencyType(invoiceToUpdate.currency_type);
     }
   }, [invoiceToUpdate]);
 
@@ -186,6 +187,7 @@ export const CreateInvoice = () => {
       title: "Are you sure?",
       text: "Are you sure that you want to delete this task?",
       icon: "warning",
+      buttons: true,
       dangerMode: true,
     });
     if (!willDelete) return;

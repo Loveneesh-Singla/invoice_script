@@ -114,7 +114,7 @@ export const CreateInvoiceRight = ({
       component="form"
       onSubmit={handleSubmit}
       sx={{
-        paddingTop: "30px",
+        paddingTop: "45px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -244,7 +244,8 @@ export const CreateInvoiceRight = ({
             Total Amount
           </Typography>
           <Typography component="h1" variant="h5" sx={{ fontWeight: 600 }}>
-            {invoiceDetails.total_amount}
+            {!loading &&
+              `${invoiceDetails.total_amount}  ${invoiceDetails.currencyType}`}
           </Typography>
         </Box>
       </Box>

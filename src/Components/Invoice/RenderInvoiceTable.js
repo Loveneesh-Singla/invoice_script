@@ -80,6 +80,7 @@ export const RenderInvoiceTable = () => {
       title: "Are you sure?",
       text: "Are you sure that you want to delete this invoice?",
       icon: "warning",
+      buttons: true,
       dangerMode: true,
     });
     if (!willDelete) return;
@@ -124,6 +125,7 @@ export const RenderInvoiceTable = () => {
       title: "Are you sure?",
       text: "Are you sure that you want to mark the payment status done?",
       icon: "warning",
+      buttons: true,
       dangerMode: true,
     });
     if (!willUpdatePaymentStatus) return;
@@ -215,7 +217,7 @@ export const RenderInvoiceTable = () => {
                 );
               })
             ) : (
-              <TableRow>"No Data is available"</TableRow>
+              <TableRow>No Data is available</TableRow>
             )}
           </TableBody>
         </Table>
