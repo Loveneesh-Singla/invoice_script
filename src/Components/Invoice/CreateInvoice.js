@@ -56,7 +56,7 @@ export const CreateInvoice = () => {
   const [tasks, setTasks] = React.useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [currencyType, setCurrencyType] = useState("");
-
+  const [currency_symbol, set_currency_symbol] = useState("");
   const navigate = useNavigate();
   const handleDateChange = (newValue) => {
     setInvoiceDate(newValue);
@@ -204,6 +204,7 @@ export const CreateInvoice = () => {
   };
 
   const handleCurrencyType = (event) => {
+    set_currency_symbol(event.target.value.slice(4));
     setCurrencyType(event.target.value);
   };
 
@@ -300,6 +301,24 @@ export const CreateInvoice = () => {
                 </Stack>
               </LocalizationProvider>
             </Box>
+            <FormControl sx={{ width: "87%", marginTop: 2 }}>
+              <InputLabel id="demo-simple-select-label">
+                Currency Type
+              </InputLabel>
+              <Select
+                labelId="currency_type"
+                id="currency_type"
+                value={currencyType}
+                label="currency_type"
+                onChange={handleCurrencyType}
+              >
+                <MenuItem value={"IND ₹"}>IND</MenuItem>
+                <MenuItem value={"USD $"}>USD</MenuItem>
+                <MenuItem value={"EUR €"}>EUR</MenuItem>
+                <MenuItem value={"GBP R"}>GBP</MenuItem>
+                <MenuItem value={"ZAR £"}>ZAR</MenuItem>
+              </Select>
+            </FormControl>
             <Box
               sx={{
                 display: "flex",
@@ -375,29 +394,11 @@ export const CreateInvoice = () => {
                   label="Total Price"
                   name="totalPrice"
                   autoComplete="totalPrice"
-                  sx={{ width: "55%", marginTop: 2 }}
+                  sx={{ width: "100%", marginTop: 2 }}
                   inputProps={{ sx: { height: 15, marginTop: 1 } }}
                   onChange={handleInput}
                   value={taskInfo.totalPrice}
                 />
-                <FormControl sx={{ width: "40%", marginTop: 2 }}>
-                  <InputLabel id="demo-simple-select-label">
-                    Currency Type
-                  </InputLabel>
-                  <Select
-                    labelId="currency_type"
-                    id="currency_type"
-                    value={currencyType}
-                    label="currency_type"
-                    onChange={handleCurrencyType}
-                  >
-                    <MenuItem value={"IND"}>IND</MenuItem>
-                    <MenuItem value={"USD"}>USD</MenuItem>
-                    <MenuItem value={"EUR"}>EUR</MenuItem>
-                    <MenuItem value={"GBP"}>GBP</MenuItem>
-                    <MenuItem value={"ZAR"}>ZAR</MenuItem>
-                  </Select>
-                </FormControl>
               </Box>
 
               <Button
@@ -420,6 +421,7 @@ export const CreateInvoice = () => {
             shareInvoiceWith={shareInvoiceWith}
             show_sender_bank_details={show_sender_bank_details}
             currencyType={currencyType}
+            currency_symbol={currency_symbol}
           />
         </Container>
       </ThemeProvider>

@@ -38,6 +38,7 @@ export const CreateInvoiceRight = ({
   isInvoiceUpdate,
   show_sender_bank_details,
   currencyType,
+  currency_symbol,
 }) => {
   const sender = JSON.parse(localStorage.getItem("sender"));
   const invoice_date = new Date(invoiceDate) + "";
@@ -52,6 +53,7 @@ export const CreateInvoiceRight = ({
     shareInvoiceWithEmail: "",
     show_sender_bank_details: "",
     currencyType: "",
+    currency_symbol: "",
   });
   const { invoiceId } = useParams();
   const { loading } = useSelector((state) => state.invoices);
@@ -64,12 +66,13 @@ export const CreateInvoiceRight = ({
           ? invoice_date.slice(4, 15) + ""
           : "",
       duedate:
-        due_date.slice(4, 15) !== "lid Date" ? due_date.slice(4, 15) + "" : " ",
+        due_date.slice(4, 15) !== "lid Date" ? due_date.slice(4, 15) + "" : "",
       allTasks: tasks,
       total_amount: totalAmount,
       shareInvoiceWithEmail: shareInvoiceWith,
       show_sender_bank_details: show_sender_bank_details,
       currencyType: currencyType,
+      currency_symbol: currency_symbol,
     });
   }, [
     tasks,
@@ -161,7 +164,7 @@ export const CreateInvoiceRight = ({
           Due Date:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{invoiceDetails?.duedate}
         </Typography>
       </Box>
-      <Box mt={3}>
+      <Box mt={6}>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer
             sx={{
@@ -214,7 +217,7 @@ export const CreateInvoiceRight = ({
                                   />
                                 </Box>
                               ) : column.id === "taskName" ? (
-                                `${value.slice(0, 7)}..`
+                                `${value.slice(0, 15)}..`
                               ) : (
                                 value
                               )}
@@ -245,7 +248,7 @@ export const CreateInvoiceRight = ({
           </Typography>
           <Typography component="h1" variant="h5" sx={{ fontWeight: 600 }}>
             {!loading &&
-              `${invoiceDetails.total_amount}  ${invoiceDetails.currencyType}`}
+              `${invoiceDetails.currency_symbol} ${invoiceDetails.total_amount}`}
           </Typography>
         </Box>
       </Box>
@@ -253,7 +256,7 @@ export const CreateInvoiceRight = ({
         <Button
           type="submit"
           variant="contained"
-          sx={{ mt: 3, mb: 2, width: "40%" }}
+          sx={{ mt: 5, mb: 2, width: "40%" }}
         >
           {invoiceId ? "Update Invoice " : "Submit"}
         </Button>
