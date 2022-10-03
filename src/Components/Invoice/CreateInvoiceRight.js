@@ -257,7 +257,7 @@ export const CreateInvoiceRight = ({
         <Button
           type="submit"
           variant="contained"
-          sx={{ mt: 5, mb: 2, width: "40%" }}
+          sx={{ mt: 6, mb: 2, width: "40%" }}
         >
           {invoiceId ? "Update Invoice " : "Submit"}
         </Button>
