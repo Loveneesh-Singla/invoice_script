@@ -119,7 +119,7 @@ export const CreateInvoiceRight = ({
       component="form"
       onSubmit={handleSubmit}
       sx={{
-        paddingTop: "45px",
+        paddingTop: "60px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
