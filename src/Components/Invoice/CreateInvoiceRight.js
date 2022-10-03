@@ -94,7 +94,8 @@ export const CreateInvoiceRight = ({
       !payload.duedate ||
       !payload.invoicedate ||
       !payload.invoicetotalvalue ||
-      payload?.tasks?.length === 0
+      payload?.tasks?.length === 0 ||
+      !payload.currency_symbol
     ) {
       toast.error("Please fill all the fields", {
         toastId: "sender_form",
