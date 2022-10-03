@@ -37,6 +37,7 @@ export const CreateInvoiceRight = ({
   shareInvoiceWith,
   isInvoiceUpdate,
   show_sender_bank_details,
+  currencyType,
 }) => {
   const sender = JSON.parse(localStorage.getItem("sender"));
   const invoice_date = new Date(invoiceDate) + "";
@@ -50,6 +51,7 @@ export const CreateInvoiceRight = ({
     total_amount: 0,
     shareInvoiceWithEmail: "",
     show_sender_bank_details: "",
+    currencyType: "",
   });
   const { invoiceId } = useParams();
   const { loading } = useSelector((state) => state.invoices);
@@ -67,6 +69,7 @@ export const CreateInvoiceRight = ({
       total_amount: totalAmount,
       shareInvoiceWithEmail: shareInvoiceWith,
       show_sender_bank_details: show_sender_bank_details,
+      currencyType: currencyType,
     });
   }, [
     tasks,
@@ -76,6 +79,7 @@ export const CreateInvoiceRight = ({
     selectedClient,
     shareInvoiceWith,
     show_sender_bank_details,
+    currencyType,
   ]);
 
   const handleSubmit = (event) => {

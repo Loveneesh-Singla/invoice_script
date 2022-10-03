@@ -112,6 +112,7 @@ export const RenderInvoiceTable = () => {
         payment_status: invoice?.payment_status || "-",
         Paid_On: paidOn?.length > 0 ? paidOn[0] : "- ",
         actions: "",
+        currencyType: invoice.currency_type,
       };
     });
     setInvoicesData(_invoices);
@@ -155,65 +156,67 @@ export const RenderInvoiceTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {invoicesData?.length > 0
-              ? invoicesData?.map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
-                    >
-                      {columns.map((column) => {
-                        let value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.id === "actions" ? (
-                              <Box sx={{ display: "flex" }}>
-                                <Tooltip title="Update Invoice">
-                                  <EditIcon
+            {invoicesData?.length > 0 ? (
+              invoicesData?.map((row, index) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    {columns.map((column) => {
+                      let value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.id === "actions" ? (
+                            <Box sx={{ display: "flex" }}>
+                              <Tooltip title="Update Invoice">
+                                <EditIcon
+                                  className="cursor_pointer"
+                                  onClick={() => editInvoice(index)}
+                                />
+                              </Tooltip>
+                              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                              <Tooltip title="Delete Invoice">
+                                <DeleteForeverIcon
+                                  onClick={() => deleteInvoice(index)}
+                                  className="cursor_pointer"
+                                />
+                              </Tooltip>
+                              &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+                              <Tooltip title="Download Invoice">
+                                <DownloadIcon
+                                  className="cursor_pointer"
+                                  onClick={() => downloadInvoicePdf(index)}
+                                />
+                              </Tooltip>
+                            </Box>
+                          ) : column.id === "payment_status" ? (
+                            <Box sx={{ display: "flex" }}>
+                              {value}&nbsp;&nbsp;&nbsp;
+                              {value !== "paid" && (
+                                <Tooltip title="Mark Payment Done">
+                                  <CheckCircleOutlineIcon
+                                    sx={{ color: "green" }}
                                     className="cursor_pointer"
-                                    onClick={() => editInvoice(index)}
+                                    onClick={() => handlePaymentStatus(index)}
                                   />
                                 </Tooltip>
-                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                <Tooltip title="Delete Invoice">
-                                  <DeleteForeverIcon
-                                    onClick={() => deleteInvoice(index)}
-                                    className="cursor_pointer"
-                                  />
-                                </Tooltip>
-                                &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
-                                <Tooltip title="Download Invoice">
-                                  <DownloadIcon
-                                    className="cursor_pointer"
-                                    onClick={() => downloadInvoicePdf(index)}
-                                  />
-                                </Tooltip>
-                              </Box>
-                            ) : column.id === "payment_status" ? (
-                              <Box sx={{ display: "flex" }}>
-                                {value}&nbsp;&nbsp;&nbsp;
-                                {value !== "paid" && (
-                                  <Tooltip title="Mark Payment Done">
-                                    <CheckCircleOutlineIcon
-                                      sx={{ color: "green" }}
-                                      className="cursor_pointer"
-                                      onClick={() => handlePaymentStatus(index)}
-                                    />
-                                  </Tooltip>
-                                )}
-                              </Box>
-                            ) : (
-                              <>{value}</>
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })
-              : "No Data is available"}
+                              )}
+                            </Box>
+                          ) : column.id === "Total_Amount" ? (
+                            <>
+                              {value}&nbsp; &nbsp;
+                              {row.currencyType}
+                            </>
+                          ) : (
+                            <>{value}</>
+                          )}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })
+            ) : (
+              <TableRow>"No Data is available"</TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

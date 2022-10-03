@@ -55,6 +55,8 @@ export const CreateInvoice = () => {
   });
   const [tasks, setTasks] = React.useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [currencyType, setCurrencyType] = useState("");
+
   const navigate = useNavigate();
   const handleDateChange = (newValue) => {
     setInvoiceDate(newValue);
@@ -64,7 +66,7 @@ export const CreateInvoice = () => {
     setDueDate(newValue);
   };
   const isInvoiceCreating = JSON.parse(localStorage.getItem("invoicecreating"));
-  console.log(CurrencyList.getAll(), "<----------currncyList");
+
   React.useEffect(() => {
     if (invoiceId) {
       dispatch(setLoading(true));
@@ -199,6 +201,10 @@ export const CreateInvoice = () => {
     return /\S+@\S+\.\S+/.test(email);
   };
 
+  const handleCurrencyType = (event) => {
+    setCurrencyType(event.target.value);
+  };
+
   const handle_show_sender_bank_details = () => {
     set_show_sender_bank_details(!show_sender_bank_details);
   };
@@ -326,7 +332,7 @@ export const CreateInvoice = () => {
                 name="taskName"
                 autoComplete="taskName"
                 sx={{ width: "87%", marginTop: 2 }}
-                inputProps={{ sx: { height: 10, marginTop: 1 } }}
+                inputProps={{ sx: { height: 15, marginTop: 1 } }}
                 onChange={handleInput}
                 value={taskInfo.taskName}
               />
@@ -350,22 +356,46 @@ export const CreateInvoice = () => {
                 name="hourly_units_worked"
                 autoComplete="hourly_units_worked"
                 sx={{ width: "87%", marginTop: 2 }}
-                inputProps={{ sx: { height: 10, marginTop: 1 } }}
+                inputProps={{ sx: { height: 15, marginTop: 1 } }}
                 onChange={handleInput}
                 value={taskInfo.hourly_units_worked}
               />
-              <Box sx={{ width: "87%" }}>
+              <Box
+                sx={{
+                  width: "87%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
                 <TextField
                   required
                   id="totalPrice"
                   label="Total Price"
                   name="totalPrice"
                   autoComplete="totalPrice"
-                  sx={{ width: "100%", marginTop: 2 }}
-                  inputProps={{ sx: { height: 10, marginTop: 1 } }}
+                  sx={{ width: "55%", marginTop: 2 }}
+                  inputProps={{ sx: { height: 15, marginTop: 1 } }}
                   onChange={handleInput}
                   value={taskInfo.totalPrice}
                 />
+                <FormControl sx={{ width: "40%", marginTop: 2 }}>
+                  <InputLabel id="demo-simple-select-label">
+                    Currency Type
+                  </InputLabel>
+                  <Select
+                    labelId="currency_type"
+                    id="currency_type"
+                    value={currencyType}
+                    label="currency_type"
+                    onChange={handleCurrencyType}
+                  >
+                    <MenuItem value={"IND"}>IND</MenuItem>
+                    <MenuItem value={"USD"}>USD</MenuItem>
+                    <MenuItem value={"EUR"}>EUR</MenuItem>
+                    <MenuItem value={"GBP"}>GBP</MenuItem>
+                    <MenuItem value={"ZAR"}>ZAR</MenuItem>
+                  </Select>
+                </FormControl>
               </Box>
 
               <Button
@@ -387,6 +417,7 @@ export const CreateInvoice = () => {
             editTask={editTask}
             shareInvoiceWith={shareInvoiceWith}
             show_sender_bank_details={show_sender_bank_details}
+            currencyType={currencyType}
           />
         </Container>
       </ThemeProvider>
