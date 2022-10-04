@@ -67,7 +67,7 @@ export const RenderInvoiceTable = () => {
   }, [page, rowsPerPage]);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setPage(++newPage);
   };
 
   const deleteInvoice = async (index) => {
@@ -229,7 +229,7 @@ export const RenderInvoiceTable = () => {
         component="div"
         count={totalInvoices}
         rowsPerPage={rowsPerPage}
-        page={page}
+        page={page - 1}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

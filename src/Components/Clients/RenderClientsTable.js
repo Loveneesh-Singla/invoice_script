@@ -55,7 +55,7 @@ export const RenderClientsTable = () => {
   }, [page, rowsPerPage]);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setPage(++newPage);
   };
 
   const deleteClient = async (index) => {
@@ -163,7 +163,7 @@ export const RenderClientsTable = () => {
         component="div"
         count={totalClients}
         rowsPerPage={rowsPerPage}
-        page={page}
+        page={page - 1}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
