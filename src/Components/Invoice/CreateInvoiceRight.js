@@ -103,6 +103,7 @@ export const CreateInvoiceRight = ({
       !payload.duedate ||
       !payload.invoicedate ||
       !payload.invoicetotalvalue ||
+      payload.tasks == "[]" ||
       !payload.tasks ||
       !payload.currency_symbol
     ) {
