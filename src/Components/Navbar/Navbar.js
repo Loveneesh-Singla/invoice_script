@@ -9,11 +9,12 @@ import {
   MenuItem,
   Menu,
   Avatar,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { handleUserLogout } from "../../Store/Slices/Auth";
+// import { Grid } from "@mui/material";
 
 export const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
