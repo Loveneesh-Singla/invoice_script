@@ -84,7 +84,7 @@ export const CreateInvoice = () => {
       setDueDate(invoiceToUpdate.duedate);
       setSelectedClient({
         id: invoiceToUpdate?.client_detail?.id,
-        index: "",
+        index: invoiceToUpdate?.client_detail?.id,
         name: invoiceToUpdate?.client_detail?.name,
         companyName: invoiceToUpdate?.client_detail?.companyname,
       });

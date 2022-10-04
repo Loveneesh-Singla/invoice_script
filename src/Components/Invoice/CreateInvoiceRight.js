@@ -28,6 +28,12 @@ const columns = [
   { id: "actions", label: "Actions", minWidth: 100 },
 ];
 
+const errorMessage = {
+  client: "Please select client",
+  duedate: "Please select due date",
+  tasks: "Please add some tasks",
+  currency_symbol: "Please select currency type",
+};
 export const CreateInvoiceRight = ({
   selectedClient,
   tasks,
@@ -100,7 +106,14 @@ export const CreateInvoiceRight = ({
       payload?.tasks?.length === 0 ||
       !payload.currency_symbol
     ) {
-      toast.error("Please fill all the fields", {
+      let message = "Please fill all the fields";
+      message = !payload.invoicetotalvalue ? errorMessage.tasks : message;
+      message = !payload.currency_symbol
+        ? errorMessage.currency_symbol
+        : message;
+      message = !payload.duedate ? errorMessage.duedate : message;
+      message = !payload.client_id ? errorMessage.client : message;
+      toast.error(message, {
         toastId: "sender_form",
       });
       return;
