@@ -261,14 +261,16 @@ export default function Add_Client() {
                   />
                 </Grid>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                {id ? "Update Client" : "Save Client"}
-              </Button>
+              <Box mt={3}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mb: 2, backgroundColor: "#1976d2" }}
+                >
+                  {id ? "Update Client" : "Save Client"}
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Container>

@@ -39,7 +39,7 @@ export default function Add_Sender_Company() {
   });
   const [isSenderExist, setIsSenderExist] = React.useState(false);
   const { loading } = useSelector((state) => state.senderCompanyInfo);
-  const [error, setError] = React.useState({email:"", phone:""});
+  const [error, setError] = React.useState({ email: "", phone: "" });
 
   React.useEffect(() => {
     sender_company = JSON.parse(localStorage.getItem("sender"));
@@ -82,21 +82,25 @@ export default function Add_Sender_Company() {
   }
 
   const handleInput = (e) => {
-    if(e.target.name === "email"){
+    if (e.target.name === "email") {
       if (e.target.value !== "" && !isValidEmail(e.target.value)) {
-        setError({...error, email: 'Email is invalid'});
+        setError({ ...error, email: "Email is invalid" });
       } else {
-        setError({...error, email: ""});
+        setError({ ...error, email: "" });
       }
     }
-    if(e.target.name === "phone"){
-      if(e.target.value !== "" && (e.target.value.length > 10 || e.target.value.length < 10)){
-        setError({...error, phone: 'Phone number must be atleast 10 numbers'});
+    if (e.target.name === "phone") {
+      if (
+        e.target.value !== "" &&
+        (e.target.value.length > 10 || e.target.value.length < 10)
+      ) {
+        setError({
+          ...error,
+          phone: "Phone number must be atleast 10 numbers",
+        });
+      } else {
+        setError({ ...error, phone: "" });
       }
-      else{
-        setError({...error, phone: ""})
-      }
-
     }
     setSenderCompany({ ...senderCompany, [e.target.name]: e.target.value });
   };
@@ -246,14 +250,16 @@ export default function Add_Sender_Company() {
                   />
                 </Grid>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Submit
-              </Button>
+              <Box mt={3}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mb: 2 }}
+                >
+                  Submit
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Container>

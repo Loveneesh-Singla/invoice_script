@@ -254,12 +254,8 @@ export const CreateInvoiceRight = ({
           </Typography>
         </Box>
       </Box>
-      <Box sx={{ width: "87%", textAlign: "end", paddingRight: "50px" }}>
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{ mt: 6, mb: 2, width: "40%" }}
-        >
+      <Box sx={{ width: "87%", textAlign: "end", paddingRight: "50px" }} mt={6}>
+        <Button type="submit" variant="contained" sx={{ mb: 2, width: "40%" }}>
           {invoiceId ? "Update Invoice " : "Submit"}
         </Button>
       </Box>

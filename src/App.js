@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./Components/LoginPage/LoginPage";
 import { ToastContainer } from "react-toastify";
@@ -10,7 +9,7 @@ import { Clients } from "./Components/Clients/Clients";
 import { Footer } from "./Components/Footer/Footer";
 import { Invoice } from "./Components/Invoice/Invoice";
 import { CreateInvoice } from "./Components/Invoice/CreateInvoice";
-
+import "./App.css";
 function App() {
   const authToken = localStorage.getItem("token");
   return (

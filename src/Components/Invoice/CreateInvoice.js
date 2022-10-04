@@ -403,14 +403,15 @@ export const CreateInvoice = () => {
                   value={taskInfo.totalPrice}
                 />
               </Box>
-
-              <Button
-                type="submit"
-                sx={{ width: "87%", marginTop: 2, marginBottom: 1.5 }}
-                variant="contained"
-              >
-                Submit
-              </Button>
+              <Box mt={2} sx={{ width: "87%" }}>
+                <Button
+                  type="submit"
+                  sx={{ width: "100%", marginBottom: 1.5 }}
+                  variant="contained"
+                >
+                  Submit
+                </Button>
+              </Box>
             </Box>
           </Box>
           <CreateInvoiceRight
