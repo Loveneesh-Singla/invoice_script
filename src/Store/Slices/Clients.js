@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   clientCreating: false,
   client: {},
+  totalClients: 0,
 };
 
 const clients = createSlice({
@@ -14,7 +15,8 @@ const clients = createSlice({
     _saveClients: (state, action) => {
       return {
         ...state,
-        clients: action?.payload,
+        clients: action?.payload?.data,
+        totalClients: action?.payload?.count || 0,
         loading: false,
       };
     },

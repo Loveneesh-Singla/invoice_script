@@ -30,7 +30,9 @@ const columns = [
 ];
 
 export const RenderClientsTable = () => {
-  const { loading, clients } = useSelector((state) => state.clients);
+  const { loading, clients, totalClients } = useSelector(
+    (state) => state.clients
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
@@ -159,7 +161,7 @@ export const RenderClientsTable = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={clientsData?.length}
+        count={totalClients}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

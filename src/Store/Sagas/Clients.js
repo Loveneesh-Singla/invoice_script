@@ -25,7 +25,7 @@ import { store } from "../Store";
 function* getClients(action) {
   try {
     const response = yield call(fetchClients, action);
-    yield put(_saveClients(response?.data?.data));
+    yield put(_saveClients(response?.data));
   } catch (e) {
     toast.error(e?.response?.data?.error?.[0] || e?.response?.data?.message);
     yield put(setLoading(false));
