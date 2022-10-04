@@ -61,7 +61,7 @@ function* deleteInvoice(action) {
 function* getInvoices(action) {
   try {
     const response = yield call(fetchInvoices, action);
-    yield put(_saveInvoice(response?.data?.data));
+    yield put(_saveInvoice(response?.data));
   } catch (e) {
     toast.error(e?.response?.data?.error?.[0] || e?.response?.data?.message);
     yield put(setLoading(false));

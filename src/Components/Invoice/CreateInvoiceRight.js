@@ -31,7 +31,7 @@ const columns = [
 const errorMessage = {
   client: "Please select client",
   duedate: "Please select due date",
-  tasks: "Please add some tasks",
+  tasks: "Please add some task",
   currency_symbol: "Please select currency type",
 };
 export const CreateInvoiceRight = ({
@@ -103,7 +103,7 @@ export const CreateInvoiceRight = ({
       !payload.duedate ||
       !payload.invoicedate ||
       !payload.invoicetotalvalue ||
-      payload?.tasks?.length === 0 ||
+      !payload.tasks ||
       !payload.currency_symbol
     ) {
       let message = "Please fill all the fields";
@@ -161,11 +161,11 @@ export const CreateInvoiceRight = ({
             Client
           </Typography>
           <Typography mt={1}>
-            Name:-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Name:-&nbsp;&nbsp;&nbsp;
             {selectedClient.name}
           </Typography>
           <Typography mt={1}>
-            Company:-&nbsp;&nbsp;&nbsp;&nbsp;{selectedClient.companyName}
+            Company:-&nbsp;&nbsp;{selectedClient.companyName}
           </Typography>
         </Box>
       </Box>
@@ -178,7 +178,7 @@ export const CreateInvoiceRight = ({
           Invoice Date:- {invoiceDetails?.invoicedate}
         </Typography>
         <Typography mt={1}>
-          Due Date:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{invoiceDetails?.duedate}
+          Due Date:- &nbsp;{invoiceDetails?.duedate}
         </Typography>
       </Box>
       <Box mt={6}>

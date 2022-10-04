@@ -31,7 +31,7 @@ export const CreateInvoice = () => {
   let currentDate = moment(new Date()).format("MMM DD YYYY");
   const dispatch = useDispatch();
   const [invoiceDate, setInvoiceDate] = React.useState(currentDate);
-  const [dueDate, setDueDate] = React.useState();
+  const [dueDate, setDueDate] = React.useState("MM/DD/YYYY");
   const [isTaskToUpdate, setIsTaskToUpdate] = useState(false);
   const [shareInvoiceWith, setShareInvoiceWith] = useState("");
   const [indexOfTaskToUpdate, setIndexOfTaskToUpdate] = useState();

@@ -6,6 +6,7 @@ const initialState = {
   invoiceCreating: false,
   invoiceToUpdate: {},
   pdfUrl: "",
+  totalInvoices: 0,
 };
 
 const invoices = createSlice({
@@ -15,7 +16,8 @@ const invoices = createSlice({
     _saveInvoice: (state, action) => {
       return {
         ...state,
-        invoices: action?.payload,
+        invoices: action?.payload?.data,
+        totalInvoices: action?.payload?.count,
         loading: false,
       };
     },

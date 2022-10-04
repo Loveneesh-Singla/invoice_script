@@ -40,7 +40,7 @@ const columns = [
 ];
 
 export const RenderInvoiceTable = () => {
-  const { loading, invoices, invoiceToUpdate } = useSelector(
+  const { loading, invoices, invoiceToUpdate, totalInvoices } = useSelector(
     (state) => state.invoices
   );
   const { clients } = useSelector((state) => state.clients);
@@ -227,7 +227,7 @@ export const RenderInvoiceTable = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={invoicesData.length}
+        count={totalInvoices}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
